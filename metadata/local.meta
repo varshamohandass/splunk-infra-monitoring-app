@@ -1,0 +1,22 @@
+[app/ui]
+version = 9.2.0.1
+modtime = 1711185352.102772500
+
+[app/launcher]
+version = 9.2.0.1
+modtime = 1711185352.130695700
+
+[indexes/softmania_infra_ec2_idx]
+owner = admin
+version = 9.2.0.1
+modtime = 1711185558.123362500
+
+[inputs/script%3A%2F%2F%24SPLUNK_HOME%5Cetc%5Capps%5Csoftmania_infra_monitoring%5Cbin%5CAWS-region-instances-list.py]
+owner = admin
+version = 9.2.0.1
+modtime = 1711185574.132680200
+
+[views/aws_ec2_monitoring]
+owner = admin
+version = 9.2.0.1
+modtime = 1711212342.379950300

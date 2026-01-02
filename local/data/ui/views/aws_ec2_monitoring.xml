@@ -1,0 +1,550 @@
+<dashboard version="1.1" theme="light">
+  <label>AWS EC2 Monitoring Dashboard</label>
+  <row>
+    <panel>
+      <title>Overview EC2 Status Details</title>
+      <table>
+        <search>
+          <query>index="softmania_infra_ec2_idx" 
+| table _time "us-east-1.stopped_instances{}.InstanceId" "us-east-1.stopped_instances{}.State" 
+| rename "us-east-1.stopped_instances{}.InstanceId" as InstanceID "us-east-1.stopped_instances{}.State" as State 
+| sort - _time 
+| head 1 
+| eval InstanceDetail=mvzip(InstanceID,State,"--") 
+| fields - InstanceID, State 
+| mvexpand InstanceDetail 
+| eval temp = split(InstanceDetail,"--") 
+| eval InstanceID=mvindex(temp,0) 
+| eval State=mvindex(temp,1) 
+| fields - InstanceDetail,temp 
+| eval region="us-east-1" 
+| table region InstanceID State 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "us-east-1.running_instances{}.InstanceId" "us-east-1.running_instances{}.State" 
+    | rename "us-east-1.running_instances{}.InstanceId" as InstanceID "us-east-1.running_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="us-east-1" 
+    | table region InstanceID State] 
+| search InstanceID!=NULL 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-northeast-3.stopped_instances{}.InstanceId" "ap-northeast-3.stopped_instances{}.State" 
+    | rename "ap-northeast-3.stopped_instances{}.InstanceId" as InstanceID "ap-northeast-3.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-northeast-3" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-northeast-3.running_instances{}.InstanceId" "ap-northeast-3.running_instances{}.State" 
+        | rename "ap-northeast-3.running_instances{}.InstanceId" as InstanceID "ap-northeast-3.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-northeast-3" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-south-1.stopped_instances{}.InstanceId" "ap-south-1.stopped_instances{}.State" 
+    | rename "ap-south-1.stopped_instances{}.InstanceId" as InstanceID "ap-south-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-south-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-south-1.running_instances{}.InstanceId" "ap-south-1.running_instances{}.State" 
+        | rename "ap-south-1.running_instances{}.InstanceId" as InstanceID "ap-south-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-south-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-northeast-2.stopped_instances{}.InstanceId" "ap-northeast-2.stopped_instances{}.State" 
+    | rename "ap-northeast-2.stopped_instances{}.InstanceId" as InstanceID "ap-northeast-2.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-northeast-2" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-northeast-2.running_instances{}.InstanceId" "ap-northeast-2.running_instances{}.State" 
+        | rename "ap-northeast-2.running_instances{}.InstanceId" as InstanceID "ap-northeast-2.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-northeast-2" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-northeast-1.stopped_instances{}.InstanceId" "ap-northeast-1.stopped_instances{}.State" 
+    | rename "ap-northeast-1.stopped_instances{}.InstanceId" as InstanceID "ap-northeast-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-northeast-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-northeast-1.running_instances{}.InstanceId" "ap-northeast-1.running_instances{}.State" 
+        | rename "ap-northeast-1.running_instances{}.InstanceId" as InstanceID "ap-northeast-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-northeast-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-southeast-1.stopped_instances{}.InstanceId" "ap-southeast-1.stopped_instances{}.State" 
+    | rename "ap-southeast-1.stopped_instances{}.InstanceId" as InstanceID "ap-southeast-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-southeast-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-southeast-1.running_instances{}.InstanceId" "ap-souththeast-1.running_instances{}.State" 
+        | rename "ap-southeast-1.running_instances{}.InstanceId" as InstanceID "ap-southeast-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-southeast-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ap-southeast-2.stopped_instances{}.InstanceId" "ap-southeast-2.stopped_instances{}.State" 
+    | rename "ap-southeast-2.stopped_instances{}.InstanceId" as InstanceID "ap-southeast-2.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ap-southeast-2" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ap-southeast-2.running_instances{}.InstanceId" "ap-souththeast-2.running_instances{}.State" 
+        | rename "ap-southeast-2.running_instances{}.InstanceId" as InstanceID "ap-southeast-2.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ap-southeast-2" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "eu-west-1.stopped_instances{}.InstanceId" "eu-west-1.stopped_instances{}.State" 
+    | rename "eu-west-1.stopped_instances{}.InstanceId" as InstanceID "eu-west-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="eu-west-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "eu-west-1.running_instances{}.InstanceId" "eu-west-1.running_instances{}.State" 
+        | rename "eu-west-1.running_instances{}.InstanceId" as InstanceID "eu-west-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="eu-west-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "eu-west-2.stopped_instances{}.InstanceId" "eu-west-2.stopped_instances{}.State" 
+    | rename "eu-west-2.stopped_instances{}.InstanceId" as InstanceID "eu-west-2.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="eu-west-2" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "eu-west-2.running_instances{}.InstanceId" "eu-west-2.running_instances{}.State" 
+        | rename "eu-west-2.running_instances{}.InstanceId" as InstanceID "eu-west-2.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="eu-west-2" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "eu-west-3.stopped_instances{}.InstanceId" "eu-west-3.stopped_instances{}.State" 
+    | rename "eu-west-3.stopped_instances{}.InstanceId" as InstanceID "eu-west-3.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="eu-west-3" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "eu-west-3.running_instances{}.InstanceId" "eu-west-3.running_instances{}.State" 
+        | rename "eu-west-3.running_instances{}.InstanceId" as InstanceID "eu-west-3.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="eu-west-3" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "us-west-2.stopped_instances{}.InstanceId" "us-west-2.stopped_instances{}.State" 
+    | rename "us-west-2.stopped_instances{}.InstanceId" as InstanceID "us-west-2.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="us-west-2" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "us-west-2.running_instances{}.InstanceId" "us-west-2.running_instances{}.State" 
+        | rename "us-west-2.running_instances{}.InstanceId" as InstanceID "us-west-2.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="us-west-2" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "us-west-1.stopped_instances{}.InstanceId" "us-west-1.stopped_instances{}.State" 
+    | rename "us-west-1.stopped_instances{}.InstanceId" as InstanceID "us-west-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="us-west-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "us-west-1.running_instances{}.InstanceId" "us-west-1.running_instances{}.State" 
+        | rename "us-west-1.running_instances{}.InstanceId" as InstanceID "us-west-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="us-west-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "us-east-2.stopped_instances{}.InstanceId" "us-east-2.stopped_instances{}.State" 
+    | rename "us-east-2.stopped_instances{}.InstanceId" as InstanceID "us-east-2.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="us-east-2" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "us-east-2.running_instances{}.InstanceId" "us-east-2.running_instances{}.State" 
+        | rename "us-east-2.running_instances{}.InstanceId" as InstanceID "us-east-2.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="us-east-2" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "ca-central-1.stopped_instances{}.InstanceId" "ca-central-1.stopped_instances{}.State" 
+    | rename "ca-central-1.stopped_instances{}.InstanceId" as InstanceID "ca-central-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="ca-central-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "ca-central-1.running_instances{}.InstanceId" "ca-central-1.running_instances{}.State" 
+        | rename "ca-central-1.running_instances{}.InstanceId" as InstanceID "ca-central-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="ca-central-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "eu-central-1.stopped_instances{}.InstanceId" "eu-central-1.stopped_instances{}.State" 
+    | rename "eu-central-1.stopped_instances{}.InstanceId" as InstanceID "eu-central-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="eu-central-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "eu-central-1.running_instances{}.InstanceId" "eu-central-1.running_instances{}.State" 
+        | rename "eu-central-1.running_instances{}.InstanceId" as InstanceID "eu-central-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="eu-central-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "eu-north-1.stopped_instances{}.InstanceId" "eu-north-1.stopped_instances{}.State" 
+    | rename "eu-north-1.stopped_instances{}.InstanceId" as InstanceID "eu-north-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="eu-north-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "eu-north-1.running_instances{}.InstanceId" "eu-north-1.running_instances{}.State" 
+        | rename "eu-north-1.running_instances{}.InstanceId" as InstanceID "eu-north-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="eu-north-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL] 
+| append 
+    [ search index="softmania_infra_ec2_idx" 
+    | table _time "sa-east-1.stopped_instances{}.InstanceId" "sa-east-1.stopped_instances{}.State" 
+    | rename "sa-east-1.stopped_instances{}.InstanceId" as InstanceID "sa-east-1.stopped_instances{}.State" as State 
+    | sort - _time 
+    | head 1 
+    | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+    | fields - InstanceID, State 
+    | mvexpand InstanceDetail 
+    | eval temp = split(InstanceDetail,"--") 
+    | eval InstanceID=mvindex(temp,0) 
+    | eval State=mvindex(temp,1) 
+    | fields - InstanceDetail,temp 
+    | eval region="sa-east-1" 
+    | table region InstanceID State 
+    | append 
+        [ search index="softmania_infra_ec2_idx" 
+        | table _time "sa-east-1.running_instances{}.InstanceId" "sa-east-1.running_instances{}.State" 
+        | rename "sa-east-1.running_instances{}.InstanceId" as InstanceID "sa-east-1.running_instances{}.State" as State 
+        | sort - _time 
+        | head 1 
+        | eval InstanceDetail=mvzip(InstanceID,State,"--") 
+        | fields - InstanceID, State 
+        | mvexpand InstanceDetail 
+        | eval temp = split(InstanceDetail,"--") 
+        | eval InstanceID=mvindex(temp,0) 
+        | eval State=mvindex(temp,1) 
+        | fields - InstanceDetail,temp 
+        | eval region="sa-east-1" 
+        | table region InstanceID State] 
+    | search InstanceID!=NULL]</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format type="color" field="State">
+          <colorPalette type="map">{"stopped":#55C169,"running":#D41F1F}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+</dashboard>
